@@ -75,7 +75,7 @@
             <Button
                 android:id="@+id/loginButton"
                 style="@style/loginButton"
-                app:color="#FFF"
+                app:color="#3E9F8C"
                 android:text="@string/login"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/loginViewsMargin"
