@@ -3,6 +3,7 @@ package com.example.tublessin_montir.activity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.tublessin_montir.R
@@ -22,8 +23,6 @@ class RegisterActivity : AppCompatActivity() {
 
 
     fun onRegisterOKClicked(view: View) {
-//        Toast.makeText(this, "masuk sini gk sih!",
-//            Toast.LENGTH_LONG).show();
         println("Masuk ke click register")
         montirViewModel.registerMontir(
             MontirAccount(
@@ -43,12 +42,37 @@ class RegisterActivity : AppCompatActivity() {
         )
         println("masuk ke montir acount info")
         montirViewModel.getMontirAccountInfo().observe(this, Observer {
-            if (it != null) {
-                println("sukses register")
+            if (it.code == "200") {
+                Toast.makeText(
+                    this, "Register Berhasil",
+                    Toast.LENGTH_LONG
+                ).show()
                 finish()
+            } else if (it.code == "900") {
+                Toast.makeText(
+                    this, "Register Gagal. Username sudah digunakan",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (it.code == "800") {
+                Toast.makeText(
+                    this, "Register Gagal. Nomor Telefon Sudah Digunakan",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (it.code == "700") {
+                Toast.makeText(
+                    this, "Register Gagal. Email Sudah Digunakan",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-        })
-    }
+//            if (it != null) {
+//                println("sukses register")
+//                finish()
+//        }
+    })
+}
 
+    fun haveAccountOnClicked(view: View) {
+        finish()
+    }
 
 }
