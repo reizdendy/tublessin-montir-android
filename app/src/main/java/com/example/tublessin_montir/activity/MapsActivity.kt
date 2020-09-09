@@ -1,24 +1,35 @@
 package com.example.tublessin_montir.activity
 
-import android.content.Intent
+import android.Manifest
+import android.content.ContextWrapper
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.tublessin_montir.R
-import com.example.tublessin_montir.domain.login.LoginViewModel
-import com.google.android.gms.maps.*
+import com.example.tublessin_montir.domain.montir.MontirLocation
+import com.example.tublessin_montir.domain.montir.MontirStatus
+import com.example.tublessin_montir.domain.montir.MontirViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.pixplicity.easyprefs.library.Prefs
+import kotlinx.android.synthetic.main.activity_maps.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var map: GoogleMap
-//    private val loginViewModel = LoginViewModel()
-//    var latitudePositionMontir: Double = 0.0
-//    var longitudePositionMontir: Double = 0.0
+    private lateinit var map:GoogleMap
+    private val montirViewModel = MontirViewModel()
+    private val REQUEST_LOCATION_PERMISSION = 1
+    private lateinit var montirId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +38,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        Prefs.Builder()
+            .setContext(this)
+            .setMode(ContextWrapper.MODE_PRIVATE)
+            .setPrefsName(packageName)
+            .setUseDefaultSharedPreference(true)
+            .build()
+
+        montirId = Prefs.getString("id", "0")
+
     }
 
     /**
@@ -40,17 +61,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        enableMyLocation()
+    }
 
-        // Add a marker in Sydney and move the camera
-//        loginViewModel.getLoginAccountInfo().observe(this, Observer {
-//            if (it != null) {
-//                latitudePositionMontir = it.account
-//            }
-//        })
-        val sydney = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
+                enableMyLocation()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -79,4 +102,66 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         else -> super.onOptionsItemSelected(item)
     }
+
+    private fun isPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun enableMyLocation() {
+        if (isPermissionGranted()) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            map.isMyLocationEnabled = true
+
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_PERMISSION
+            )
+        }
+    }
+
+
+    fun cekClicked(view: View) {
+        map.clear()
+        val montirPosition = LatLng(map.myLocation.latitude, map.myLocation.longitude)
+        map.addMarker(MarkerOptions().position(montirPosition).title("Marker in Montir Position"))
+        map.moveCamera(CameraUpdateFactory.newLatLng(montirPosition))
+
+        montirViewModel.updateMontirLocation(
+            montirId,
+            MontirLocation(map.myLocation.latitude, map.myLocation.longitude)
+        )
+    }
+
+
+    fun buttonOnOperation(view: View) {
+        operationOff.visibility = View.INVISIBLE
+        montirViewModel.updateMontirStatusOperational(
+            montirId,
+            MontirStatus("A", "1")
+        )
+        operationOn.visibility = View.VISIBLE
+    }
+    fun buttonOffOperation(view: View) {
+        operationOn.visibility = View.INVISIBLE
+        montirViewModel.updateMontirStatusOperational(
+            montirId,
+            MontirStatus("N", "1")
+        )
+        operationOff.visibility = View.VISIBLE
+    }
+
 }

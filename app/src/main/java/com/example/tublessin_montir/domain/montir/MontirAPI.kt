@@ -10,7 +10,7 @@ interface MontirAPI {
     fun registerMontir(@Body montirAccount: MontirAccount ): Call<MontirResponeMessage>
 
     @GET("/montir/profile/detail/{id}")
-    fun requestGetMontirDetail(@Path("id") id: String): Call<MontirResponeMessage>
+    fun getMontirByID(@Path("id")id:String): Call<MontirResponeMessage>
 
     @Multipart
     @POST("/montir/profile/image/upload/{id}")
@@ -18,4 +18,15 @@ interface MontirAPI {
         @Part imagename: MultipartBody.Part,
         @Path("id") id: String
     ): Call<MontirResponeMessage>
+
+
+    @GET("/montir/location/{id}")
+    fun getMontirLocationByID(@Path("id")id:String): Call<MontirLocation>
+
+    @POST("/montir/profile/update/location/{id}")
+    fun updateMontirLocationByID(@Path("id")id:String, @Body montirLocation: MontirLocation): Call<MontirResponeMessage>
+
+    @POST("/montir/profile/update/status/{id}")
+    fun updateMontirStatusOperational(@Path("id")id:String, @Body montirStatus: MontirStatus): Call<MontirResponeMessage>
+
 }
