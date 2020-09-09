@@ -43,25 +43,55 @@ class MontirRepository(val montirAPI: MontirAPI) {
         })
     }
 
-    fun getMontirById(id: Int) {
+    fun requestGetMontirDetail(id: String) {
         montirAPI.getMontirByID(id).enqueue(object : Callback<MontirResponeMessage> {
             override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
-                val responseData = response.body()
-
-                if (responseData?.code == "200") {
-                    val res = responseData.result
-                    val gson = Gson()
-                    montirAccountInfo.value = gson.fromJson(gson.toJson(res), MontirResponeMessage::class.java)
+                if (response.code() == 200) {
+                    montirAccountInfo.value = response.body()
                 }
             }
             override fun onFailure(call: Call<MontirResponeMessage>, t: Throwable) {
-                t.printStackTrace()
+                println("=============================")
+                print("Request Detail Montir Failed -> ")
+                println(t)
+                println("=============================")
             }
         })
     }
 
-    fun updateMontirLocation(id:Int, montirLocation: MontirLocation){
+    fun updateMontirLocation(id:String, montirLocation: MontirLocation){
+        montirAPI.updateMontirLocationByID(id, montirLocation).enqueue(object : Callback<MontirResponeMessage> {
+            override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
+                println("=============================")
+                println(response.body())
+                println(response.code())
+                println("=============================")
+            }
 
+            override fun onFailure(call: Call<MontirResponeMessage>, t: Throwable) {
+                println("=============================")
+                println(t)
+                println("=============================")
+            }
+        })
+
+    }
+
+    fun updateMontirStatusOperational(id:String, montirStatus: MontirStatus){
+        montirAPI.updateMontirStatusOperational(id, montirStatus).enqueue(object : Callback<MontirResponeMessage> {
+            override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
+                println("=============================")
+                println(response.body())
+                println(response.code())
+                println("=============================")
+            }
+
+            override fun onFailure(call: Call<MontirResponeMessage>, t: Throwable) {
+                println("=============================")
+                println(t)
+                println("=============================")
+            }
+        })
     }
 
 

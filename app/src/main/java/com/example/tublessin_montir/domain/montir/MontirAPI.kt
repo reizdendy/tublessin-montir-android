@@ -9,13 +9,15 @@ interface MontirAPI{
     fun registerMontir(@Body montirAccount: MontirAccount): Call<MontirResponeMessage>
 
     @GET("/montir/profile/detail/{id}")
-    fun getMontirByID(@Path("id")id:Int): Call<MontirResponeMessage>
+    fun getMontirByID(@Path("id")id:String): Call<MontirResponeMessage>
 
     @GET("/montir/location/{id}")
-    fun getMontirLocationByID(@Path("id")id:Int): Call<MontirLocation>
+    fun getMontirLocationByID(@Path("id")id:String): Call<MontirLocation>
 
-    @PATCH("/montir/profile/update/location/{id}")
-    fun updateMontirLocationByID(@Path("id")id:Int, @Body montirLocation: MontirLocation): Call<MontirResponeMessage>
+    @POST("/montir/profile/update/location/{id}")
+    fun updateMontirLocationByID(@Path("id")id:String, @Body montirLocation: MontirLocation): Call<MontirResponeMessage>
 
+    @POST("/montir/profile/update/status/{id}")
+    fun updateMontirStatusOperational(@Path("id")id:String, @Body montirStatus: MontirStatus): Call<MontirResponeMessage>
 
 }

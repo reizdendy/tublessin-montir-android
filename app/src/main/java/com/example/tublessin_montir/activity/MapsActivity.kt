@@ -1,9 +1,8 @@
 package com.example.tublessin_montir.activity
 
 import android.Manifest
-import android.content.Intent
+import android.content.ContextWrapper
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,22 +10,26 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import com.example.tublessin_montir.R
-import com.example.tublessin_montir.domain.login.LoginViewModel
-import com.google.android.gms.maps.*
+import com.example.tublessin_montir.domain.montir.MontirLocation
+import com.example.tublessin_montir.domain.montir.MontirStatus
+import com.example.tublessin_montir.domain.montir.MontirViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.pixplicity.easyprefs.library.Prefs
+import kotlinx.android.synthetic.main.activity_maps.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var map: GoogleMap
-    private val loginViewModel = LoginViewModel()
+    private lateinit var map:GoogleMap
+    private val montirViewModel = MontirViewModel()
     private val REQUEST_LOCATION_PERMISSION = 1
-    var latitudePositionMontir: Double = 0.0
-    var longitudePositionMontir: Double = 0.0
-    var accountId: Int = 0
+    private lateinit var montirId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +39,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-//        loginViewModel.getLoginAccountInfo().observe(this, Observer {
-//            if (it != null) {
-//                accountId = it.account.id
-//            }
-//        })
+        Prefs.Builder()
+            .setContext(this)
+            .setMode(ContextWrapper.MODE_PRIVATE)
+            .setPrefsName(packageName)
+            .setUseDefaultSharedPreference(true)
+            .build()
+
+        montirId = Prefs.getString("id", "0")
+
     }
 
     /**
@@ -54,20 +61,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-
         enableMyLocation()
-
     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray) {
+        grantResults: IntArray
+    ) {
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
                 enableMyLocation()
@@ -102,10 +103,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun isPermissionGranted() : Boolean {
+    private fun isPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun enableMyLocation() {
@@ -118,18 +120,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
             map.isMyLocationEnabled = true
-        }
-        else {
+
+        } else {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -138,7 +133,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+
     fun cekClicked(view: View) {
-        println(map.myLocation.latitude)
+        map.clear()
+        val montirPosition = LatLng(map.myLocation.latitude, map.myLocation.longitude)
+        map.addMarker(MarkerOptions().position(montirPosition).title("Marker in Montir Position"))
+        map.moveCamera(CameraUpdateFactory.newLatLng(montirPosition))
+
+        montirViewModel.updateMontirLocation(
+            montirId,
+            MontirLocation(map.myLocation.latitude, map.myLocation.longitude)
+        )
     }
+
+
+    fun buttonOnOperation(view: View) {
+        operationOff.visibility = View.INVISIBLE
+        montirViewModel.updateMontirStatusOperational(
+            montirId,
+            MontirStatus("A", "1")
+        )
+        operationOn.visibility = View.VISIBLE
+    }
+    fun buttonOffOperation(view: View) {
+        operationOn.visibility = View.INVISIBLE
+        montirViewModel.updateMontirStatusOperational(
+            montirId,
+            MontirStatus("N", "1")
+        )
+        operationOff.visibility = View.VISIBLE
+    }
+
 }

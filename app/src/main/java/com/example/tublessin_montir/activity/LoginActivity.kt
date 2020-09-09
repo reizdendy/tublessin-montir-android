@@ -1,5 +1,6 @@
 package com.example.tublessin_montir.activity
 
+import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.domain.login.LoginAccount
 import com.example.tublessin_montir.domain.login.LoginViewModel
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -17,12 +19,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-//        loginViewModel.getLoginAccountInfo().observe(this, Observer {
-//            if (it.token != null) {
-//                startActivity(Intent(this, TestActivity::class.java))
-//            }
-//        })
-
+        Prefs.Builder()
+            .setContext(this)
+            .setMode(ContextWrapper.MODE_PRIVATE)
+            .setPrefsName(packageName)
+            .setUseDefaultSharedPreference(true)
+            .build()
     }
 
     fun onLoginClicked(view: View) {
@@ -35,12 +37,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.getLoginAccountInfo().observe(this, Observer {
             if (it != null) {
                 println("sukses login")
-//                println(it.message)
-//                println(it.token)
-//                println(it.account.id)
-//                println(it.account.username)
-//                println(it.account.password)
-//                println(it.account.status_account)
+                Prefs.putString("id", it.account.id.toString())
                 startActivity(Intent(this, MapsActivity::class.java))
             }
         })
