@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.getLoginAccountInfo().observe(this, Observer {
             if (it != null) {
                 println("sukses login")
+
                 Prefs.putString("id", it.account.id.toString())
                 startActivity(Intent(this, MapsActivity::class.java))
             }
@@ -46,6 +47,4 @@ class LoginActivity : AppCompatActivity() {
     fun onNewRegisterClicked(view: View) {
         startActivity(Intent(this, RegisterActivity::class.java))
     }
-
-
 }

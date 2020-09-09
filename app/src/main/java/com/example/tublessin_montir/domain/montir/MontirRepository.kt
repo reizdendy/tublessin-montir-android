@@ -2,6 +2,7 @@ package com.example.tublessin_montir.domain.montir
 
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import okhttp3.MultipartBody
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +44,8 @@ class MontirRepository(val montirAPI: MontirAPI) {
         })
     }
 
+
+   
     fun requestGetMontirDetail(id: String) {
         montirAPI.getMontirByID(id).enqueue(object : Callback<MontirResponeMessage> {
             override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
@@ -56,6 +59,11 @@ class MontirRepository(val montirAPI: MontirAPI) {
                 println(t)
                 println("=============================")
             }
+        })
+    }
+
+    fun uploadMontirProfilePicture(id: String, image: MultipartBody.Part) {
+        montirAPI.uploadMontirProfilePicture(image,id).enqueue(object : Callback<MontirResponeMessage> {
         })
     }
 
@@ -93,6 +101,4 @@ class MontirRepository(val montirAPI: MontirAPI) {
             }
         })
     }
-
-
 }
