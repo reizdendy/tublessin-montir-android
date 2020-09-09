@@ -1,9 +1,12 @@
 package com.example.tublessin_montir.activity
 
 import android.app.Activity
+import android.content.ContextWrapper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.isVisible
 
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -11,6 +14,7 @@ import com.example.tublessin_montir.R
 import com.example.tublessin_montir.config.defaultHost
 import com.example.tublessin_montir.domain.montir.MontirViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_profile.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -25,11 +29,31 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+//        Prefs.Builder()
+//            .setContext(this)
+//            .setMode(ContextWrapper.MODE_PRIVATE)
+//            .setPrefsName(packageName)
+//            .setUseDefaultSharedPreference(true)
+//            .build()
+//
+//        Prefs.putString("id", "1")
+//        var data = Prefs.getString("id", "10")
+//        println("===========================================")
+//        println(data)
+//        println("===========================================")
+
         montirViewModel.requestGetMontirDetail("1")
         montirViewModel.getMontirAccountInfo().observe(this, Observer {
             firstname_view.text = it.result.profile.firstname
             lastname_view.text = it.result.profile.lastname
             phone_number_view.text = it.result.profile.phone_number
+            email_profile_view.text = it.result.profile.email
+            ktp_profile_view.text = it.result.profile.ktp
+            borndate_profile_view.text = it.result.profile.born_date
+            address_profile_view.text = it.result.profile.address
+            if (it.result.profile.verified_account == "Y") {
+                greentick_view.visibility = View.VISIBLE
+            }
             Glide.with(this)
                 .load("${defaultHost()}montir/file/image/${it.result.profile.imageURL}")
                 .circleCrop().into(profile_picture_view)

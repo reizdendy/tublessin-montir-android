@@ -7,7 +7,7 @@ import retrofit2.http.*
 interface MontirAPI {
 
     @POST("/account/register/montir")
-    fun registerMontir(@Body montirAccount: MontirAccount): Call<MontirResponeMessage>
+    fun registerMontir(@Body montirAccount: MontirAccount ): Call<MontirResponeMessage>
 
     @GET("/montir/profile/detail/{id}")
     fun requestGetMontirDetail(@Path("id") id: String): Call<MontirResponeMessage>

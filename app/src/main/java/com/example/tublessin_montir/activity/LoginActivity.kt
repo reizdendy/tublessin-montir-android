@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
 //                println(it.account.password)
 //                println(it.account.status_account)
 //                startActivity(Intent(this, MapsActivity::class.java))
-                startActivity(Intent(this, ProfileActivity::class.java))
+                startActivity(Intent(this, ReviewActivity::class.java))
             }
         })
     }
