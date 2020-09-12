@@ -6,6 +6,11 @@
         android:icon="@drawable/ic_baseline_map_24"
         android:title="Maps" />
     <item
+        android:id="@+id/montirRating"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="Review" />
+    <item
         android:id="@+id/montirProfile"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_account_box_24"

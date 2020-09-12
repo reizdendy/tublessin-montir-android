@@ -1,51 +1,69 @@
-package com.example.tublessin_montir.activity
+package com.example.tublessin_montir.screen
 
 import android.app.Activity
 import android.content.ContextWrapper
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.isVisible
-
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import com.bumptech.glide.Glide
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.config.defaultHost
 import com.example.tublessin_montir.domain.montir.MontirViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.pixplicity.easyprefs.library.Prefs
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.fragment_montir_profile.*
+import kotlinx.android.synthetic.main.fragment_montir_profile.address_profile_view
+import kotlinx.android.synthetic.main.fragment_montir_profile.borndate_profile_view
+import kotlinx.android.synthetic.main.fragment_montir_profile.email_profile_view
+import kotlinx.android.synthetic.main.fragment_montir_profile.firstname_view
+import kotlinx.android.synthetic.main.fragment_montir_profile.greentick_view
+import kotlinx.android.synthetic.main.fragment_montir_profile.ktp_profile_view
+import kotlinx.android.synthetic.main.fragment_montir_profile.lastname_view
+import kotlinx.android.synthetic.main.fragment_montir_profile.phone_number_view
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import pub.devrel.easypermissions.EasyPermissions
 
-class ProfileActivity : AppCompatActivity() {
+
+class MontirProfileFragment : Fragment(), View.OnClickListener {
+
     private val montirViewModel = MontirViewModel()
     lateinit var imageFileChoosed: MultipartBody.Part
     private lateinit var montirId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+//        activity?.fragmentManager?.popBackStack()
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_montir_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        logoutClicked.setOnClickListener(this)
         Prefs.Builder()
-            .setContext(this)
+            .setContext(this.activity)
             .setMode(ContextWrapper.MODE_PRIVATE)
-            .setPrefsName(packageName)
+            .setPrefsName(this.activity?.packageName)
             .setUseDefaultSharedPreference(true)
             .build()
 
         montirId = Prefs.getString("id", "0")
 
         montirViewModel.requestGetMontirDetail(montirId)
-        montirViewModel.getMontirAccountInfo().observe(this, Observer {
+        montirViewModel.getMontirAccountInfo().observe(viewLifecycleOwner, Observer {
             firstname_view.text = it.result.profile.firstname
             lastname_view.text = it.result.profile.lastname
             phone_number_view.text = it.result.profile.phone_number
@@ -58,12 +76,12 @@ class ProfileActivity : AppCompatActivity() {
             }
             Glide.with(this)
                 .load("${defaultHost()}montir/file/image/${it.result.profile.imageURL}")
-                .circleCrop().into(profile_picture_view)
+                .circleCrop().into(montir_profile_picture_view)
         })
 
-        camera_upload_button_view.setOnClickListener {
+        camera_upload_button.setOnClickListener {
             if (EasyPermissions.hasPermissions(
-                    this,
+                    requireActivity(),
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 )
             ) {
@@ -85,27 +103,6 @@ class ProfileActivity : AppCompatActivity() {
                 )
             }
         }
-
-        profile_bottom_navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.homeMontir -> {
-                    finish()
-                    startActivity(Intent(this, MapsActivity::class.java))
-                    true
-                }
-
-                R.id.montirRating -> {
-                    finish()
-                    startActivity(Intent(this, ReviewActivity::class.java))
-                    true
-                }
-                else -> {
-                    println("MASUK ELSE")
-                    false
-                }
-            }
-        }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -114,7 +111,7 @@ class ProfileActivity : AppCompatActivity() {
         if (requestCode == 300 && resultCode == Activity.RESULT_OK) {
             val getFile = ImagePicker.getFile(data)!! // dapetin data gambar yang barusan dipilih
             Glide.with(this).load(getFile).circleCrop()
-                .into(profile_picture_view) // Buat nampilin image yang dipilih, pake library glide
+                .into(montir_profile_picture_view) // Buat nampilin image yang dipilih, pake library glide
 
             val requestBody = RequestBody.create("multipart".toMediaTypeOrNull(), getFile)
             imageFileChoosed = MultipartBody.Part.createFormData("file", getFile.name, requestBody)
@@ -122,8 +119,11 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun onExitClicked(view: View) {
-        finish()
-        startActivity(Intent(this, LoginActivity::class.java))
+    override fun onClick(v: View?) {
+        when(v){
+            logoutClicked ->{
+                activity?.finish()
+            }
+        }
     }
 }

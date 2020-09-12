@@ -141,6 +141,7 @@
                         android:id="@+id/registerButton"
                         style="@style/registerButton"
                         app:color="#FFF"
+                        android:backgroundTint="#00ADC1"
                         android:text="@string/register"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"

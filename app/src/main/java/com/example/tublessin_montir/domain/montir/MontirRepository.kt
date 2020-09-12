@@ -64,6 +64,14 @@ class MontirRepository(val montirAPI: MontirAPI) {
 
     fun uploadMontirProfilePicture(id: String, image: MultipartBody.Part) {
         montirAPI.uploadMontirProfilePicture(image,id).enqueue(object : Callback<MontirResponeMessage> {
+            override fun onFailure(call: Call<MontirResponeMessage>, t: Throwable) {
+            }
+
+            override fun onResponse(
+                call: Call<MontirResponeMessage>,
+                response: Response<MontirResponeMessage>
+            ) {
+            }
         })
     }
 

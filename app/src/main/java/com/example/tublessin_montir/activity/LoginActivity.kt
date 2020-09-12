@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
                 println("sukses login")
 
                 Prefs.putString("id", it.account.id.toString())
-                startActivity(Intent(this, MapsActivity::class.java))
+                startActivity(Intent(this, HomeActivity::class.java))
             }
         })
     }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mapsFragment">
+    <action
+        android:id="@+id/action_to_profile"
+        app:destination="@id/montirProfileFragment" />
+    <action
+        android:id="@+id/action_toreview"
+        app:destination="@id/montirReviewFragment" />
+    <action
+        android:id="@+id/action_to_maps"
+        app:destination="@id/mapsFragment" />
+    <fragment
+        android:id="@+id/montirProfileFragment"
+        android:name="com.example.tublessin_montir.screen.MontirProfileFragment"
+        android:label="fragment_montir_profile"
+        tools:layout="@layout/fragment_montir_profile" />
+    <fragment
+        android:id="@+id/montirReviewFragment"
+        android:name="com.example.tublessin_montir.screen.MontirReviewFragment"
+        android:label="fragment_montir_review"
+        tools:layout="@layout/fragment_montir_review" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.tublessin_montir.screen.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
+</navigation>

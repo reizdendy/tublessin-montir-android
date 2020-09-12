@@ -2,6 +2,7 @@ package com.example.tublessin_montir.activity
 
 import android.Manifest
 import android.content.ContextWrapper
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +11,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.domain.montir.MontirLocation
 import com.example.tublessin_montir.domain.montir.MontirStatus
@@ -21,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.pixplicity.easyprefs.library.Prefs
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_maps.*
 
 
@@ -47,6 +52,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .build()
 
         montirId = Prefs.getString("id", "0")
+
+
+        maps_bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+
+                R.id.montirRating -> {
+                    finish()
+                    startActivity(Intent(this, ReviewActivity::class.java))
+                    true
+                }
+                R.id.montirProfile -> {
+                    finish()
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> {
+                    println("MASUK ELSE")
+                    false
+                }
+            }
+        }
+
 
     }
 
