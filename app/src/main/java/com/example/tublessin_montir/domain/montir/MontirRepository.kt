@@ -43,14 +43,14 @@ class MontirRepository(val montirAPI: MontirAPI) {
             }
         })
     }
-
-
    
     fun requestGetMontirDetail(id: String) {
         montirAPI.getMontirByID(id).enqueue(object : Callback<MontirResponeMessage> {
             override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
                 if (response.code() == 200) {
-                    montirAccountInfo.value = response.body()
+                    if (response.body() != null) {
+                        montirAccountInfo.value = response.body()
+                    }
                 }
             }
             override fun onFailure(call: Call<MontirResponeMessage>, t: Throwable) {

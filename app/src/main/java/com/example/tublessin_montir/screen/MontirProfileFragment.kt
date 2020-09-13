@@ -39,7 +39,7 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        activity?.fragmentManager?.popBackStack()
+        activity?.fragmentManager?.popBackStack()
     }
 
     override fun onCreateView(

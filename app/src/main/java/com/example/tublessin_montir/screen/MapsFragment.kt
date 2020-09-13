@@ -11,7 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.tublessin_montir.R
+import com.example.tublessin_montir.config.defaultHost
 import com.example.tublessin_montir.domain.montir.MontirLocation
 import com.example.tublessin_montir.domain.montir.MontirStatus
 import com.example.tublessin_montir.domain.montir.MontirViewModel
@@ -23,36 +26,33 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.pixplicity.easyprefs.library.Prefs
-import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.fragment_maps.*
 import kotlinx.android.synthetic.main.fragment_maps.operationOff
 import kotlinx.android.synthetic.main.fragment_maps.operationOn
-import kotlinx.android.synthetic.main.fragment_maps.view.*
+import kotlinx.android.synthetic.main.fragment_montir_profile.*
 
 class MapsFragment : Fragment(), View.OnClickListener {
 
 
-    private lateinit var map:GoogleMap
+    private lateinit var map: GoogleMap
     private val montirViewModel = MontirViewModel()
     private val REQUEST_LOCATION_PERMISSION = 1
     private lateinit var montirId: String
 
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+
         map = googleMap
         enableMyLocation()
-//        val montirPosition = LatLng(googleMap.myLocation.latitude, googleMap.myLocation.longitude)
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        montirViewModel.requestGetMontirDetail(montirId)
+        montirViewModel.getMontirAccountInfo().observe(viewLifecycleOwner, Observer {
+            var lat = it.result.profile.location.latitude
+            var long = it.result.profile.location.longitude
+            var montirPosition = LatLng(lat, long)
+            googleMap.addMarker(
+                MarkerOptions().position(montirPosition).title("Marker in Montir Position")
+            )
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(montirPosition))
+        })
     }
 
     override fun onCreateView(
@@ -61,6 +61,7 @@ class MapsFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
+        activity?.fragmentManager?.popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -124,7 +125,7 @@ class MapsFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v){
+        when (v) {
             operationOff -> {
                 operationOff.visibility = View.INVISIBLE
                 montirViewModel.updateMontirStatusOperational(
@@ -144,7 +145,9 @@ class MapsFragment : Fragment(), View.OnClickListener {
             getCurrentLocation -> {
                 map.clear()
                 val montirPosition = LatLng(map.myLocation.latitude, map.myLocation.longitude)
-                map.addMarker(MarkerOptions().position(montirPosition).title("Marker in Montir Position"))
+                map.addMarker(
+                    MarkerOptions().position(montirPosition).title("Marker in Montir Position")
+                )
                 map.moveCamera(CameraUpdateFactory.newLatLng(montirPosition))
 
                 montirViewModel.updateMontirLocation(
@@ -154,4 +157,5 @@ class MapsFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+
 }

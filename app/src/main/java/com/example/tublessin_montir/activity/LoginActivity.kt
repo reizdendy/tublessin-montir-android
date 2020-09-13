@@ -4,6 +4,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.tublessin_montir.R
@@ -28,20 +29,28 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onLoginClicked(view: View) {
-        loginViewModel.requestMontirLogin(
-            LoginAccount(
-                username = editTextUsername.text.toString(),
-                password = editTextPassword.text.toString()
+        if (editTextUsername.text.toString() == "" || editTextPassword.text.toString() == "") {
+            Toast.makeText(
+                this,
+                "Username atau Password Kosong",
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            loginViewModel.requestMontirLogin(
+                LoginAccount(
+                    username = editTextUsername.text.toString(),
+                    password = editTextPassword.text.toString()
+                )
             )
-        )
-        loginViewModel.getLoginAccountInfo().observe(this, Observer {
-            if (it != null) {
-                println("sukses login")
+            loginViewModel.getLoginAccountInfo().observe(this, Observer {
+                if (it != null) {
+                    println("sukses login")
 
-                Prefs.putString("id", it.account.id.toString())
-                startActivity(Intent(this, HomeActivity::class.java))
-            }
-        })
+                    Prefs.putString("id", it.account.id.toString())
+                    startActivity(Intent(this, HomeActivity::class.java))
+                }
+            })
+        }
     }
 
     fun onNewRegisterClicked(view: View) {

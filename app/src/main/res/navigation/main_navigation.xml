@@ -17,15 +17,30 @@
         android:id="@+id/montirProfileFragment"
         android:name="com.example.tublessin_montir.screen.MontirProfileFragment"
         android:label="fragment_montir_profile"
-        tools:layout="@layout/fragment_montir_profile" />
+        tools:layout="@layout/fragment_montir_profile" >
+        <action
+            android:id="@+id/action_montirProfileFragment_pop"
+            app:popUpTo="@id/montirProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/montirReviewFragment"
         android:name="com.example.tublessin_montir.screen.MontirReviewFragment"
         android:label="fragment_montir_review"
-        tools:layout="@layout/fragment_montir_review" />
+        tools:layout="@layout/fragment_montir_review" >
+        <action
+            android:id="@+id/action_montirReviewFragment_pop"
+            app:popUpTo="@id/montirReviewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.tublessin_montir.screen.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_pop"
+            app:popUpTo="@id/mapsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

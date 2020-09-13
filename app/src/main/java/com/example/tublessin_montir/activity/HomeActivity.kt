@@ -23,18 +23,15 @@ class HomeActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.homeMontir -> {
                     navController.navigate(R.id.action_to_maps)
-                    this.fragmentManager.popBackStack()
                     true
                 }
 
                 R.id.montirRating -> {
                     navController.navigate(R.id.action_toreview)
-                    this.fragmentManager.popBackStack()
                     true
                 }
                 R.id.montirProfile -> {
                     navController.navigate(R.id.action_to_profile)
-                    this.fragmentManager.popBackStack()
                     true
                 }
                 else -> {

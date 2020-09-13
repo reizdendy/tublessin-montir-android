@@ -100,15 +100,29 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputGender"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:backgroundTint="@color/primaryTextColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp">
+
+                        <TextView
+                            style="@style/parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Gender"
+                            android:textColor="@color/black" />
+
                         <Spinner
                             android:id="@+id/registerGender"
-                            style="@style/spinnerHintText"
-                            android:textColor="@color/whiteTextColor"
+                            style="@style/parent"
+                            android:backgroundTint="@color/primaryTextColor"
+                            android:entries="@array/gender_arrays"
                             android:maxLines="1"
                             android:prompt="@string/gender_prompt"
-                            android:entries="@array/gender_arrays">
+                            android:textColor="@color/black">
                         </Spinner>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,11 +151,10 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
 
-                    <Button
+                    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                         android:id="@+id/registerButton"
                         style="@style/registerButton"
                         app:color="#FFF"
-                        android:backgroundTint="#00ADC1"
                         android:text="@string/register"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
@@ -211,16 +224,7 @@
                     android:src="@drawable/ic_google_plus"
                     android:layout_marginLeft="10dp"/>
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
-    <View
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="11dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/ic_side_bg"/>
 
 </RelativeLayout>
