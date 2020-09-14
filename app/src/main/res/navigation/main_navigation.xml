@@ -50,5 +50,9 @@
         android:id="@+id/notifyOrderFragment"
         android:name="com.example.tublessin_montir.domain.transaction.screen.NotifyOrderFragment"
         android:label="fragment_notify_order"
-        tools:layout="@layout/fragment_notify_order" />
+        tools:layout="@layout/fragment_notify_order" >
+        <action
+            android:id="@+id/action_notifyOrderFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
 </navigation>

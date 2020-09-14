@@ -7,14 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".domain.transaction.screen.NotifyOrderFragment">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="KAMU DAPET ORDERAN BARU"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/onClickOrder"
+        style="@style/loginButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="4dp"
+        android:padding="6dp"
+        android:text="Klik OK"
+        app:cornerRadius="27dp"
+        app:layout_constraintStart_toEndOf="@+id/onCancelOrder"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/onCancelOrder"
+        style="@style/loginButton"
+        android:layout_gravity="center_horizontal"
+        android:padding="6dp"
+        android:text="CANCEL"
+        app:cornerRadius="27dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/openMapClicked"
+        style="@style/loginButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="68dp"
+        android:padding="6dp"
+        android:text="Open MAP"
+        app:cornerRadius="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onCancelOrder" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

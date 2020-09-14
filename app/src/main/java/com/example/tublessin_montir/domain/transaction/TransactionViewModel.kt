@@ -11,11 +11,14 @@ class TransactionViewModel : ViewModel() {
         )
     )
 
-    fun transactionList() = transactionRepository.transactionLiveData as LiveData<TransactionResponeMessage>
+    fun transactionList() =
+        transactionRepository.transactionLiveData as LiveData<TransactionResponeMessage>
 
-    fun RequestMontirTransactionList(montirId:String) = transactionRepository.GetMontirTransactionList(montirId)
+    fun RequestMontirTransactionList(montirId: String) =
+        transactionRepository.GetMontirTransactionList(montirId)
 
-    fun UpdateStatusTransaction(transactionId:String) = transactionRepository.UpdateStatusTransaction(transactionId)
+    fun UpdateStatusTransaction(transactionId: String, transaction: Transaction) =
+        transactionRepository.UpdateStatusTransaction(transactionId, transaction)
 
     fun PostNewTransaction(transaction: Transaction) =
         transactionRepository.PostNewTransaction(transaction)

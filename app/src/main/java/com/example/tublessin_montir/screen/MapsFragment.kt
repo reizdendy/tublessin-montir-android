@@ -77,6 +77,9 @@ class MapsFragment : Fragment(), View.OnClickListener {
 //            if(it.Results != null){
                 if (!it.Results.results.isNullOrEmpty()){
                     if(it.Results.results[0].status == "On Process"){
+                        Prefs.putString("transactionId", it.Results.results[0].id)
+                        Prefs.putDouble("userLatitude", it.Results.results[0].location.latitude)
+                        Prefs.putDouble("userLongitude", it.Results.results[0].location.longitude)
                         navController.navigate(R.id.action_mapsFragment_to_notifyOrderFragment)
                     }
                 }
@@ -176,8 +179,11 @@ class MapsFragment : Fragment(), View.OnClickListener {
                     montirId,
                     MontirLocation(map.myLocation.latitude, map.myLocation.longitude)
                 )
-                transactionViewModel.RequestMontirTransactionList(montirId)
 
+                Prefs.putDouble("latitudePosition", map.myLocation.latitude)
+                Prefs.putDouble("longitudePosition", map.myLocation.longitude)
+
+                transactionViewModel.RequestMontirTransactionList(montirId)
 
                 handler.postDelayed(this, 5000)
             }
