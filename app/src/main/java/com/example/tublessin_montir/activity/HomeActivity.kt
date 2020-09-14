@@ -48,24 +48,4 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val timerTask = object : TimerTask() {
-            override fun run() {
-                runOnUiThread { /* your code here */ }
-            }
-        }
-
-        timer = Timer()
-        timer.schedule(timerTask, noDelay, everyTenSeconds)
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        timer.cancel()
-        timer.purge()
-    }
-
 }

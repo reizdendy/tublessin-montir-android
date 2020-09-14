@@ -42,5 +42,13 @@
             android:id="@+id/action_mapsFragment_pop"
             app:popUpTo="@id/mapsFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mapsFragment_to_notifyOrderFragment"
+            app:destination="@id/notifyOrderFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/notifyOrderFragment"
+        android:name="com.example.tublessin_montir.domain.transaction.screen.NotifyOrderFragment"
+        android:label="fragment_notify_order"
+        tools:layout="@layout/fragment_notify_order" />
 </navigation>

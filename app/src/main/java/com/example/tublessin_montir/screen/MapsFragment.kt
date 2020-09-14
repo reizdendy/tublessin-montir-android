@@ -11,10 +11,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.domain.montir.MontirLocation
 import com.example.tublessin_montir.domain.montir.MontirStatus
 import com.example.tublessin_montir.domain.montir.MontirViewModel
+import com.example.tublessin_montir.domain.transaction.TransactionViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,14 +26,17 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.pixplicity.easyprefs.library.Prefs
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_maps.*
 
 class MapsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var map: GoogleMap
     private val montirViewModel = MontirViewModel()
+    private val transactionViewModel = TransactionViewModel()
     private val REQUEST_LOCATION_PERMISSION = 1
     private lateinit var montirId: String
+    lateinit var navController: NavController
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -62,7 +69,20 @@ class MapsFragment : Fragment(), View.OnClickListener {
         operationOn.setOnClickListener(this)
         getCurrentLocation.setOnClickListener(this)
 
+        navController= Navigation.findNavController(view)
+
         montirId = Prefs.getString("id", "0")
+
+        transactionViewModel.transactionList().observe(viewLifecycleOwner, Observer{
+//            if(it.Results != null){
+                if (!it.Results.results.isNullOrEmpty()){
+                    if(it.Results.results[0].status == "On Process"){
+                        navController.navigate(R.id.action_mapsFragment_to_notifyOrderFragment)
+                    }
+                }
+//            }
+        })
+
     }
 
     override fun onRequestPermissionsResult(
@@ -141,7 +161,6 @@ class MapsFragment : Fragment(), View.OnClickListener {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         val handler = Handler()
@@ -157,6 +176,9 @@ class MapsFragment : Fragment(), View.OnClickListener {
                     montirId,
                     MontirLocation(map.myLocation.latitude, map.myLocation.longitude)
                 )
+                transactionViewModel.RequestMontirTransactionList(montirId)
+
+
                 handler.postDelayed(this, 5000)
             }
         }
