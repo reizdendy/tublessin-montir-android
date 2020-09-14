@@ -12,7 +12,6 @@ import com.example.tublessin_montir.R
 import com.example.tublessin_montir.domain.montir.MontirViewModel
 import com.example.tublessin_montir.recyleview.ReviewRecyleAdapter
 import com.pixplicity.easyprefs.library.Prefs
-import kotlinx.android.synthetic.main.activity_review.*
 import kotlinx.android.synthetic.main.fragment_montir_review.*
 
 
@@ -34,13 +33,6 @@ class MontirReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Prefs.Builder()
-            .setContext(this.activity)
-            .setMode(ContextWrapper.MODE_PRIVATE)
-            .setPrefsName(this.activity?.packageName)
-            .setUseDefaultSharedPreference(true)
-            .build()
 
         montirId = Prefs.getString("id", "0")
 

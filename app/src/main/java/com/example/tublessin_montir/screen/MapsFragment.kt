@@ -1,24 +1,20 @@
 package com.example.tublessin_montir.screen
 
 import android.Manifest
-import android.content.ContextWrapper
 import android.content.pm.PackageManager
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
 import com.example.tublessin_montir.R
-import com.example.tublessin_montir.config.defaultHost
 import com.example.tublessin_montir.domain.montir.MontirLocation
 import com.example.tublessin_montir.domain.montir.MontirStatus
 import com.example.tublessin_montir.domain.montir.MontirViewModel
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,12 +23,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.fragment_maps.*
-import kotlinx.android.synthetic.main.fragment_maps.operationOff
-import kotlinx.android.synthetic.main.fragment_maps.operationOn
-import kotlinx.android.synthetic.main.fragment_montir_profile.*
 
 class MapsFragment : Fragment(), View.OnClickListener {
-
 
     private lateinit var map: GoogleMap
     private val montirViewModel = MontirViewModel()
@@ -40,7 +32,6 @@ class MapsFragment : Fragment(), View.OnClickListener {
     private lateinit var montirId: String
 
     private val callback = OnMapReadyCallback { googleMap ->
-
         map = googleMap
         enableMyLocation()
         montirViewModel.requestGetMontirDetail(montirId)
@@ -61,7 +52,6 @@ class MapsFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
-        activity?.fragmentManager?.popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,13 +61,6 @@ class MapsFragment : Fragment(), View.OnClickListener {
         operationOff.setOnClickListener(this)
         operationOn.setOnClickListener(this)
         getCurrentLocation.setOnClickListener(this)
-
-        Prefs.Builder()
-            .setContext(this.activity)
-            .setMode(ContextWrapper.MODE_PRIVATE)
-            .setPrefsName(this.activity?.packageName)
-            .setUseDefaultSharedPreference(true)
-            .build()
 
         montirId = Prefs.getString("id", "0")
     }
@@ -158,4 +141,20 @@ class MapsFragment : Fragment(), View.OnClickListener {
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        val handler = Handler()
+        val runnable: Runnable = object : Runnable {
+            override fun run() {
+                montirViewModel.updateMontirLocation(
+                    montirId,
+                    MontirLocation(map.myLocation.latitude, map.myLocation.longitude)
+                )
+                handler.postDelayed(this, 5000)
+            }
+        }
+//Start
+        handler.postDelayed(runnable, 1000)
+    }
 }

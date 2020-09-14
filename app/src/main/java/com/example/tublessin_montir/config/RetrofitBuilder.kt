@@ -3,9 +3,8 @@ package com.example.tublessin_montir.config
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 fun defaultHost():String{
-    return "http://192.168.43.155:8080/"
+    return "http://34.101.198.49:8084/"
 }
 
 class RetrofitBuilder{

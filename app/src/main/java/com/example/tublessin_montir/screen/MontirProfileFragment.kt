@@ -4,27 +4,20 @@ import android.app.Activity
 import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.config.defaultHost
 import com.example.tublessin_montir.domain.montir.MontirViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.pixplicity.easyprefs.library.Prefs
-import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.fragment_montir_profile.*
-import kotlinx.android.synthetic.main.fragment_montir_profile.address_profile_view
-import kotlinx.android.synthetic.main.fragment_montir_profile.borndate_profile_view
-import kotlinx.android.synthetic.main.fragment_montir_profile.email_profile_view
-import kotlinx.android.synthetic.main.fragment_montir_profile.firstname_view
-import kotlinx.android.synthetic.main.fragment_montir_profile.greentick_view
-import kotlinx.android.synthetic.main.fragment_montir_profile.ktp_profile_view
-import kotlinx.android.synthetic.main.fragment_montir_profile.lastname_view
-import kotlinx.android.synthetic.main.fragment_montir_profile.phone_number_view
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -39,7 +32,6 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.fragmentManager?.popBackStack()
     }
 
     override fun onCreateView(
@@ -53,12 +45,6 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         logoutClicked.setOnClickListener(this)
-        Prefs.Builder()
-            .setContext(this.activity)
-            .setMode(ContextWrapper.MODE_PRIVATE)
-            .setPrefsName(this.activity?.packageName)
-            .setUseDefaultSharedPreference(true)
-            .build()
 
         montirId = Prefs.getString("id", "0")
 
@@ -74,11 +60,16 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
             if (it.result.profile.verified_account == "Y") {
                 greentick_view.visibility = View.VISIBLE
             }
+            val glideUrl = GlideUrl(
+                "${defaultHost()}montir/file/image/${it.result.profile.imageURL}",
+                LazyHeaders.Builder()
+                    .addHeader("Authorization", "Bearer ${Prefs.getString("token", "0")}")
+                    .build()
+            )
             Glide.with(this)
-                .load("${defaultHost()}montir/file/image/${it.result.profile.imageURL}")
+                .load(glideUrl)
                 .circleCrop().into(montir_profile_picture_view)
         })
-
         camera_upload_button.setOnClickListener {
             if (EasyPermissions.hasPermissions(
                     requireActivity(),
@@ -104,6 +95,7 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

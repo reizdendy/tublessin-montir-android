@@ -43,11 +43,19 @@ class LoginActivity : AppCompatActivity() {
                 )
             )
             loginViewModel.getLoginAccountInfo().observe(this, Observer {
-                if (it != null) {
+                if (it  != null) {
                     println("sukses login")
+                    println(it.token)
 
                     Prefs.putString("id", it.account.id.toString())
+                    Prefs.putString("token", it.token)
                     startActivity(Intent(this, HomeActivity::class.java))
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Username atau Password Salah",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             })
         }

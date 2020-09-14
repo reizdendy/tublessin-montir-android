@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import okhttp3.MultipartBody
 import com.google.gson.Gson
+import com.pixplicity.easyprefs.library.Prefs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,6 +12,7 @@ import retrofit2.Response
 class MontirRepository(val montirAPI: MontirAPI) {
     var montirAccountInfo = MutableLiveData<MontirResponeMessage>()
     var montirLocationInfo = MutableLiveData<MontirLocation>()
+    val token =  "Bearer ${Prefs.getString("token", "0")}"
 
     fun registerMontir(montirAccount: MontirAccount) {
         montirAPI.registerMontir(montirAccount).enqueue(object : Callback<MontirResponeMessage> {
@@ -45,7 +47,8 @@ class MontirRepository(val montirAPI: MontirAPI) {
     }
    
     fun requestGetMontirDetail(id: String) {
-        montirAPI.getMontirByID(id).enqueue(object : Callback<MontirResponeMessage> {
+        println(token)
+        montirAPI.getMontirByID(id, token).enqueue(object : Callback<MontirResponeMessage> {
             override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
                 if (response.code() == 200) {
                     if (response.body() != null) {
@@ -63,7 +66,7 @@ class MontirRepository(val montirAPI: MontirAPI) {
     }
 
     fun uploadMontirProfilePicture(id: String, image: MultipartBody.Part) {
-        montirAPI.uploadMontirProfilePicture(image,id).enqueue(object : Callback<MontirResponeMessage> {
+        montirAPI.uploadMontirProfilePicture(image,id, token).enqueue(object : Callback<MontirResponeMessage> {
             override fun onFailure(call: Call<MontirResponeMessage>, t: Throwable) {
             }
 
@@ -76,7 +79,7 @@ class MontirRepository(val montirAPI: MontirAPI) {
     }
 
     fun updateMontirLocation(id:String, montirLocation: MontirLocation){
-        montirAPI.updateMontirLocationByID(id, montirLocation).enqueue(object : Callback<MontirResponeMessage> {
+        montirAPI.updateMontirLocationByID(id, token, montirLocation).enqueue(object : Callback<MontirResponeMessage> {
             override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
                 println("=============================")
                 println(response.body())
@@ -94,7 +97,7 @@ class MontirRepository(val montirAPI: MontirAPI) {
     }
 
     fun updateMontirStatusOperational(id:String, montirStatus: MontirStatus){
-        montirAPI.updateMontirStatusOperational(id, montirStatus).enqueue(object : Callback<MontirResponeMessage> {
+        montirAPI.updateMontirStatusOperational(id, token, montirStatus).enqueue(object : Callback<MontirResponeMessage> {
             override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
                 println("=============================")
                 println(response.body())

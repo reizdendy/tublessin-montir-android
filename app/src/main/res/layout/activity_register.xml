@@ -85,7 +85,6 @@
                             android:hint="@string/firstname"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLastname"
                         style="@style/parent"
@@ -103,25 +102,23 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:backgroundTint="@color/primaryTextColor"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         app:boxCornerRadiusTopEnd="10dp"
                         app:boxCornerRadiusTopStart="10dp">
-
                         <TextView
                             style="@style/parent"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="Gender"
                             android:textColor="@color/black" />
-
                         <Spinner
                             android:id="@+id/registerGender"
                             style="@style/parent"
-                            android:backgroundTint="@color/primaryTextColor"
-                            android:entries="@array/gender_arrays"
+                            android:popupBackground="@color/primaryTextColor"
                             android:maxLines="1"
                             android:prompt="@string/gender_prompt"
+                            android:entries="@array/gender_arrays"
                             android:textColor="@color/black">
                         </Spinner>
                     </com.google.android.material.textfield.TextInputLayout>
