@@ -147,6 +147,12 @@ class MapsFragment : Fragment(), View.OnClickListener {
         val handler = Handler()
         val runnable: Runnable = object : Runnable {
             override fun run() {
+                map.clear()
+                val montirPosition = LatLng(map.myLocation.latitude, map.myLocation.longitude)
+                map.addMarker(
+                    MarkerOptions().position(montirPosition).title("Marker in Montir Position")
+                )
+                map.moveCamera(CameraUpdateFactory.newLatLng(montirPosition))
                 montirViewModel.updateMontirLocation(
                     montirId,
                     MontirLocation(map.myLocation.latitude, map.myLocation.longitude)
