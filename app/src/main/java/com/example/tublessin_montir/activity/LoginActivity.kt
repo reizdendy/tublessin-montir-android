@@ -26,6 +26,9 @@ class LoginActivity : AppCompatActivity() {
             .setPrefsName(packageName)
             .setUseDefaultSharedPreference(true)
             .build()
+        if(Prefs.contains("id") && Prefs.contains("token") && Prefs.contains("username") && Prefs.contains("password")){
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
     }
 
     fun onLoginClicked(view: View) {
@@ -49,6 +52,8 @@ class LoginActivity : AppCompatActivity() {
 
                     Prefs.putString("id", it.account.id.toString())
                     Prefs.putString("token", it.token)
+                    Prefs.putString("username", it.account.username)
+                    Prefs.putString("password", it.account.password)
                     startActivity(Intent(this, HomeActivity::class.java))
                 } else {
                     Toast.makeText(

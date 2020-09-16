@@ -12,8 +12,9 @@
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="282dp"
-        android:background="#5CC4C8"
+        android:background="@color/themeColor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,11 +29,16 @@
         tools:srcCompat="@tools:sample/avatars" />
 
 
-    <ImageView
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
         android:id="@+id/logoutClicked"
-        android:layout_width="52dp"
-        android:layout_height="84dp"
-        android:src="@drawable/ic_baseline_exit_to_app_24"
+        style="@style/cancelButton"
+        android:layout_width="76dp"
+        android:layout_height="31dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
+        android:text="@string/logout"
+        app:cornerRadius="27dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,6 +103,7 @@
         app:srcCompat="@drawable/camera" />
 
     <LinearLayout
+        android:id="@+id/profileLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -123,7 +130,7 @@
                 android:id="@+id/email_profile_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="sampel_email@gmail.com"
+                android:text="@string/sample_email"
                 android:textColor="#1C1C1C"
                 android:textSize="25sp" />
 
@@ -148,7 +155,7 @@
                 android:id="@+id/ktp_profile_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="088988 1231 499 22"
+                android:text="@string/sample_ktp"
                 android:textColor="#1C1C1C"
                 android:textSize="25sp" />
 
@@ -173,7 +180,7 @@
                 android:id="@+id/borndate_profile_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1995-12-25"
+                android:text="@string/sample_born_date"
                 android:textColor="#1C1C1C"
                 android:textSize="25sp" />
 
@@ -181,7 +188,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
@@ -198,7 +205,7 @@
                 android:id="@+id/address_profile_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jakarta"
+                android:text="@string/sample_city"
                 android:textColor="#1C1C1C"
                 android:textSize="25sp" />
 
@@ -213,7 +220,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-black"
-        android:text="Profile"
+        android:text="@string/profile"
         android:textColor="#202020"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -229,5 +236,16 @@
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/montir_profile_picture_view"
         app:srcCompat="@drawable/tick" />
+
+    <ImageView
+        android:id="@+id/updateClicked"
+        android:layout_width="39dp"
+        android:layout_height="23dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:srcCompat="@drawable/ic_baseline_edit_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

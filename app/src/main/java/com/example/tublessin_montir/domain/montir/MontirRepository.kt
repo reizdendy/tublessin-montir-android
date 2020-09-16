@@ -112,4 +112,21 @@ class MontirRepository(val montirAPI: MontirAPI) {
             }
         })
     }
+
+    fun updateMontirProfile(id:String, montirProfileUpdated: MontirProfileUpdated){
+        montirAPI.updateMontirProfile(id, token, montirProfileUpdated).enqueue(object : Callback<MontirResponeMessage> {
+            override fun onResponse(call: Call<MontirResponeMessage>, response: Response<MontirResponeMessage>) {
+                println("=============================")
+                println(response.body())
+                println(response.code())
+                println("=============================")
+            }
+
+            override fun onFailure(call: Call<MontirResponeMessage>, t: Throwable) {
+                println("=============================")
+                println(t)
+                println("=============================")
+            }
+        })
+    }
 }

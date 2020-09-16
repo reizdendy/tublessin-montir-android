@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tublessin_montir.R
+import com.example.tublessin_montir.domain.montir.MontirRating
 import com.example.tublessin_montir.domain.montir.MontirViewModel
 import com.example.tublessin_montir.recyleview.ReviewRecyleAdapter
 import com.pixplicity.easyprefs.library.Prefs
@@ -39,7 +40,7 @@ class MontirReviewFragment : Fragment() {
         montir_review_list_recycle_view.layoutManager = LinearLayoutManager(this.context)
         montirViewModel.requestGetMontirDetail(montirId)
         montirViewModel.getMontirAccountInfo().observe(viewLifecycleOwner, Observer {
-            if (it.result.profile.rating_list.size != 0){
+            if (!it.result.profile.rating_list.isNullOrEmpty()){
                 montir_review_list_recycle_view.adapter = ReviewRecyleAdapter(it.result.profile.rating_list)
             }
         })

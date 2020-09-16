@@ -7,9 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.example.final_project.domain.user.UserViewModel
 import com.example.tublessin_montir.R
+import com.example.tublessin_montir.config.defaultHost
 import com.example.tublessin_montir.domain.transaction.Transaction
 import com.example.tublessin_montir.domain.transaction.TransactionLocation
 import com.example.tublessin_montir.domain.transaction.TransactionViewModel
@@ -20,7 +26,9 @@ import kotlinx.android.synthetic.main.fragment_notify_order.*
 class NotifyOrderFragment : Fragment(), View.OnClickListener {
 
     private val transactionViewModel = TransactionViewModel()
+    private val userViewModel = UserViewModel()
     private lateinit var transactionId: String
+    private lateinit var userId: String
     lateinit var navController: NavController
 
     override fun onCreateView(
@@ -39,6 +47,24 @@ class NotifyOrderFragment : Fragment(), View.OnClickListener {
         navController= Navigation.findNavController(view)
 
         transactionId = Prefs.getString("transactionId", "0")
+        userId = Prefs.getString("userId", "0")
+        userViewModel.requestGetUserDetail(userId)
+        userViewModel.getUserAccountInfo().observe(viewLifecycleOwner, Observer {
+            firstname_user_detail.text = it.result.profile.firstname
+            lastname_user_detail.text = it.result.profile.lastname
+            phone_user_detail.text = it.result.profile.phone_number
+
+            val url = "${defaultHost()}user/file/image/${it.result.profile.imageURL}"
+            val glideUrl = GlideUrl(
+                url,
+                LazyHeaders.Builder()
+                    .addHeader("Authorization", "Bearer ${Prefs.getString("token", "0")}")
+                    .build()
+            )
+            Glide.with(this)
+                .load(glideUrl)
+                .circleCrop().into(photo_user_detail)
+        })
     }
 
     override fun onClick(v: View?) {

@@ -3,12 +3,17 @@
     <item
         android:id="@+id/homeMontir"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_map_24"
+        android:icon="@drawable/ic_baseline_location_on_24"
         android:title="Maps" />
+    <item
+        android:id="@+id/historyTransaction"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="History" />
     <item
         android:id="@+id/montirRating"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_map_24"
+        android:icon="@drawable/ic_baseline_stars_24"
         android:title="Review" />
     <item
         android:id="@+id/montirProfile"

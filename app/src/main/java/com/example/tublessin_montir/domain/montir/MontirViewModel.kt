@@ -18,5 +18,6 @@ class MontirViewModel : ViewModel(){
     fun uploadMontirProfilePicture(id: String,  image: MultipartBody.Part) = montirRepository.uploadMontirProfilePicture(id, image)
     fun updateMontirLocation(id:String,  montirLocation: MontirLocation) = montirRepository.updateMontirLocation(id, montirLocation)
     fun updateMontirStatusOperational(id:String, montirStatus: MontirStatus) = montirRepository.updateMontirStatusOperational(id, montirStatus)
+    fun updateMontirProfile(id:String, montirProfileUpdated: MontirProfileUpdated) = montirRepository.updateMontirProfile(id, montirProfileUpdated)
 
 }

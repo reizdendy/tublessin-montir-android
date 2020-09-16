@@ -9,11 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.config.defaultHost
+import com.example.tublessin_montir.domain.montir.MontirStatus
 import com.example.tublessin_montir.domain.montir.MontirViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.pixplicity.easyprefs.library.Prefs
@@ -29,6 +32,7 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
     private val montirViewModel = MontirViewModel()
     lateinit var imageFileChoosed: MultipartBody.Part
     private lateinit var montirId: String
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,8 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         logoutClicked.setOnClickListener(this)
+        updateClicked.setOnClickListener(this)
+        navController = Navigation.findNavController(view)
 
         montirId = Prefs.getString("id", "0")
 
@@ -114,7 +120,19 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v){
             logoutClicked ->{
+                Prefs.remove("id")
+                Prefs.remove("token")
+                Prefs.remove("username")
+                Prefs.remove("password")
+
+                montirViewModel.updateMontirStatusOperational(
+                    montirId,
+                    MontirStatus("N", "1")
+                )
                 activity?.finish()
+            }
+            updateClicked -> {
+                navController.navigate(R.id.action_montirProfileFragment_to_updateMontirProfileFragment)
             }
         }
     }

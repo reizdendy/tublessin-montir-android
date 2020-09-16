@@ -32,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
                     firstname = registerFirstname.text.toString(),
                     lastname = registerLastname.text.toString(),
                     gender = registerGender.selectedItem.toString(),
+                    city = registerCity.text.toString(),
                     email = registerEmail.text.toString(),
                     phone_number = registerMobileNumber.text.toString(),
                     status = MontirStatus(),

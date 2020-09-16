@@ -33,8 +33,6 @@ class TransactionRepository(val transactionAPI: TransactionAPI) {
     }
 
     fun GetMontirTransactionList(montirId:String){
-        println("montir id pas transaction : ${montirId}")
-        println("tokennya pas transaction : ${token}")
         transactionAPI.GetMontirTransactionList(montirId, "", token).enqueue(object:Callback<TransactionResponeMessage>{
             override fun onResponse(
                 call: Call<TransactionResponeMessage>,

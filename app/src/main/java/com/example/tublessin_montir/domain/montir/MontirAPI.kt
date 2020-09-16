@@ -12,6 +12,9 @@ interface MontirAPI {
     @GET("/montir/profile/detail/{id}")
     fun getMontirByID(@Path("id")id:String, @Header("Authorization") token:String ): Call<MontirResponeMessage>
 
+    @POST("/montir/profile/update/{id}")
+    fun updateMontirProfile(@Path("id")id:String, @Header("Authorization") token:String, @Body montirProfileUpdated: MontirProfileUpdated): Call<MontirResponeMessage>
+
     @Multipart
     @POST("/montir/profile/image/upload/{id}")
     fun uploadMontirProfilePicture(

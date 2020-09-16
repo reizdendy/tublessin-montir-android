@@ -17,4 +17,5 @@
     <color name="primaryTextColor">#FFE082</color>
     <color name="forgotPasswordPage">#52658F</color>
     <color name="typeEmailWhite">#FFFF</color>
+    <color name="colorLightBlack">#707070</color>
 </resources>

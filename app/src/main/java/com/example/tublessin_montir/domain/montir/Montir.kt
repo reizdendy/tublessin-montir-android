@@ -34,6 +34,19 @@ class MontirProfile(
     val location: MontirLocation
 )
 
+class MontirProfileUpdated(
+    val id: Int = 0,
+    val firstname: String = "",
+    val lastname: String = "",
+    val born_date: String = "",
+    val gender: String = "",
+    val ktp: String = "",
+    val address: String = "",
+    val city: String = "",
+    val email: String = "",
+    val phone_number: String = ""
+)
+
 class MontirRating(
     val rating: Int = 0,
     val rater_id: String = "",

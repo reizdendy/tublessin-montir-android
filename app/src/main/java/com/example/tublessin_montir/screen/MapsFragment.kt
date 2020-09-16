@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -67,23 +68,31 @@ class MapsFragment : Fragment(), View.OnClickListener {
         mapFragment?.getMapAsync(callback)
         operationOff.setOnClickListener(this)
         operationOn.setOnClickListener(this)
-        getCurrentLocation.setOnClickListener(this)
 
-        navController= Navigation.findNavController(view)
+        navController = Navigation.findNavController(view)
 
         montirId = Prefs.getString("id", "0")
 
-        transactionViewModel.transactionList().observe(viewLifecycleOwner, Observer{
-//            if(it.Results != null){
-                if (!it.Results.results.isNullOrEmpty()){
-                    if(it.Results.results[0].status == "On Process"){
-                        Prefs.putString("transactionId", it.Results.results[0].id)
-                        Prefs.putDouble("userLatitude", it.Results.results[0].location.latitude)
-                        Prefs.putDouble("userLongitude", it.Results.results[0].location.longitude)
-                        navController.navigate(R.id.action_mapsFragment_to_notifyOrderFragment)
-                    }
+        montirViewModel.getMontirAccountInfo().observe(viewLifecycleOwner, Observer {
+            if (it.result.profile.status.status_operational == "A") {
+                operationOn.isVisible = true
+                operationOff.isVisible = false
+            } else {
+                operationOff.isVisible = true
+                operationOn.isVisible = false
+            }
+        })
+
+        transactionViewModel.transactionList().observe(viewLifecycleOwner, Observer {
+            if (!it.Results.results.isNullOrEmpty()) {
+                if (it.Results.results[0].status == "On Process") {
+                    Prefs.putString("transactionId", it.Results.results[0].id)
+                    Prefs.putString("userId", it.Results.results[0].id_user)
+                    Prefs.putDouble("userLatitude", it.Results.results[0].location.latitude)
+                    Prefs.putDouble("userLongitude", it.Results.results[0].location.longitude)
+                    navController.navigate(R.id.action_mapsFragment_to_notifyOrderFragment)
                 }
-//            }
+            }
         })
 
     }
@@ -133,33 +142,20 @@ class MapsFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v) {
             operationOff -> {
-                operationOff.visibility = View.INVISIBLE
+                operationOff.isVisible = false
                 montirViewModel.updateMontirStatusOperational(
                     montirId,
                     MontirStatus("A", "1")
                 )
-                operationOn.visibility = View.VISIBLE
+                operationOn.isVisible = true
             }
             operationOn -> {
-                operationOn.visibility = View.INVISIBLE
+                operationOn.isVisible = false
                 montirViewModel.updateMontirStatusOperational(
                     montirId,
                     MontirStatus("N", "1")
                 )
-                operationOff.visibility = View.VISIBLE
-            }
-            getCurrentLocation -> {
-                map.clear()
-                val montirPosition = LatLng(map.myLocation.latitude, map.myLocation.longitude)
-                map.addMarker(
-                    MarkerOptions().position(montirPosition).title("Marker in Montir Position")
-                )
-                map.moveCamera(CameraUpdateFactory.newLatLng(montirPosition))
-
-                montirViewModel.updateMontirLocation(
-                    montirId,
-                    MontirLocation(map.myLocation.latitude, map.myLocation.longitude)
-                )
+                operationOff.isVisible = true
             }
         }
     }
@@ -189,6 +185,6 @@ class MapsFragment : Fragment(), View.OnClickListener {
             }
         }
 //Start
-        handler.postDelayed(runnable, 1000)
+        handler.postDelayed(runnable, 7000)
     }
 }

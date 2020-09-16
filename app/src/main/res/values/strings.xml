@@ -24,4 +24,17 @@
     <string name="dropped_pin">Dropped Pin</string>
     <string name="poi">poi</string>
     <string name="montir_rating">Rating Kamu</string>
+    <string name="phone_number">085712345678</string>
+    <string name="cancel">CANCEL</string>
+    <string name="selesai">SELESAI</string>
+    <string name="open_map">Open MAP</string>
+    <string name="logout">LOGOUT</string>
+    <string name="city">City</string>
+    <string name="gender">Gender</string>
+    <string name="profile">Profile</string>
+    <string name="sample_email">sampel_email@gmail.com</string>
+    <string name="sample_ktp">088988 1231 499 22</string>
+    <string name="sample_born_date">1995-12-25</string>
+    <string name="sample_city">Jakarta</string>
+    <string name="sample_transaction_date">2020-09-06 21:26:16</string>
 </resources>

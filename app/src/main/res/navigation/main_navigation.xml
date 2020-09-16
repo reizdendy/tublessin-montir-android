@@ -13,6 +13,9 @@
     <action
         android:id="@+id/action_to_maps"
         app:destination="@id/mapsFragment" />
+    <action
+        android:id="@+id/action_to_history"
+        app:destination="@id/historyTransactionFragment" />
     <fragment
         android:id="@+id/montirProfileFragment"
         android:name="com.example.tublessin_montir.screen.MontirProfileFragment"
@@ -22,6 +25,9 @@
             android:id="@+id/action_montirProfileFragment_pop"
             app:popUpTo="@id/montirProfileFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_montirProfileFragment_to_updateMontirProfileFragment"
+            app:destination="@id/updateMontirProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/montirReviewFragment"
@@ -54,5 +60,20 @@
         <action
             android:id="@+id/action_notifyOrderFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateMontirProfileFragment"
+        android:name="com.example.tublessin_montir.screen.UpdateMontirProfileFragment"
+        android:label="fragment_update_montir_profile"
+        tools:layout="@layout/fragment_update_montir_profile" />
+    <fragment
+        android:id="@+id/historyTransactionFragment"
+        android:name="com.example.tublessin_montir.screen.HistoryTransactionFragment"
+        android:label="fragment_history_transaction"
+        tools:layout="@layout/fragment_history_transaction" >
+        <action
+            android:id="@+id/action_historyTransactionFragment_pop"
+            app:popUpTo="@id/historyTransactionFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

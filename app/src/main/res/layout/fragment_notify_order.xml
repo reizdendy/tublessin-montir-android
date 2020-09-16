@@ -5,42 +5,146 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
     tools:context=".domain.transaction.screen.NotifyOrderFragment">
 
-
-    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-        android:id="@+id/onClickOrder"
-        style="@style/loginButton"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="4dp"
-        android:padding="6dp"
-        android:text="Klik OK"
-        app:cornerRadius="27dp"
-        app:layout_constraintStart_toEndOf="@+id/onCancelOrder"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-        android:id="@+id/onCancelOrder"
-        style="@style/loginButton"
-        android:layout_gravity="center_horizontal"
-        android:padding="6dp"
-        android:text="CANCEL"
-        app:cornerRadius="27dp"
+    <ImageView
+        android:id="@+id/photo_user_detail"
+        android:layout_width="160dp"
+        android:layout_height="166dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/phone_user_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/phone_number"
+        android:textColor="#FF9800"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
         android:id="@+id/openMapClicked"
-        style="@style/loginButton"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="68dp"
-        android:padding="6dp"
-        android:text="Open MAP"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/themeColor"
+        android:text="@string/open_map"
         app:cornerRadius="27dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/onCancelOrder" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_user_detail"
+        app:layout_constraintVertical_bias="0.23000002"  />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonConfirmationLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/openMapClicked">
+
+
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/onClickOrder"
+            style="@style/okButton"
+            android:layout_width="120dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="16dp"
+            android:padding="6dp"
+            android:text="@string/selesai"
+            app:cornerRadius="27dp"
+            app:layout_constraintStart_toEndOf="@+id/onCancelOrder"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/onCancelOrder"
+            style="@style/cancelButton"
+            android:layout_width="120dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center_horizontal"
+            android:padding="6dp"
+            android:text="@string/cancel"
+            app:cornerRadius="27dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo_user_detail">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <TextView
+            android:id="@+id/firstname_user_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/firstname"
+            android:textAlignment="textStart"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/lastname_user_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/lastname"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/firstname_user_detail"
+            tools:layout_editor_absoluteY="0dp"
+            android:textColor="@android:color/black"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/customerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="CUSTOMER"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/photo_user_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
