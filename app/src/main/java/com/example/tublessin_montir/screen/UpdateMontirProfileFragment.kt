@@ -61,8 +61,18 @@ class UpdateMontirProfileFragment : Fragment(), View.OnClickListener {
             } else {
                 editGender.setSelection(1)
             }
-            editKTP.text = Editable.Factory.getInstance().newEditable(it.result.profile.ktp)
-            editAddress.text = Editable.Factory.getInstance().newEditable(it.result.profile.address)
+            if(!it.result.profile.ktp.isNullOrEmpty()) {
+                editKTP.text = Editable.Factory.getInstance().newEditable(it.result.profile.ktp)
+            } else {
+                editKTP.text = Editable.Factory.getInstance().newEditable("")
+            }
+            if (!it.result.profile.address.isNullOrEmpty()) {
+                editAddress.text =
+                    Editable.Factory.getInstance().newEditable(it.result.profile.address)
+            } else {
+                editAddress.text =
+                    Editable.Factory.getInstance().newEditable("")
+            }
             editCity.text = Editable.Factory.getInstance().newEditable(it.result.profile.city)
             editEmail.text = Editable.Factory.getInstance().newEditable(it.result.profile.email)
             editMobilePhone.text =

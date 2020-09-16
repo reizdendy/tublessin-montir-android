@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tublessin_montir.R
@@ -42,6 +43,9 @@ class MontirReviewFragment : Fragment() {
         montirViewModel.getMontirAccountInfo().observe(viewLifecycleOwner, Observer {
             if (!it.result.profile.rating_list.isNullOrEmpty()){
                 montir_review_list_recycle_view.adapter = ReviewRecyleAdapter(it.result.profile.rating_list)
+                layoutNoReview.isVisible = false
+            } else {
+                layoutNoReview.isVisible = true
             }
         })
     }

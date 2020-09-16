@@ -34,10 +34,6 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var montirId: String
     lateinit var navController: NavController
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -118,8 +114,8 @@ class MontirProfileFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v){
-            logoutClicked ->{
+        when (v) {
+            logoutClicked -> {
                 Prefs.remove("id")
                 Prefs.remove("token")
                 Prefs.remove("username")

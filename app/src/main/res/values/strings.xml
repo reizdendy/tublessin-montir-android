@@ -37,4 +37,16 @@
     <string name="sample_born_date">1995-12-25</string>
     <string name="sample_city">Jakarta</string>
     <string name="sample_transaction_date">2020-09-06 21:26:16</string>
+
+    <!--Splash Screen-->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">
+            @drawable/splash_bg
+        </item>
+    </style>
+
+<!--    facebook-->
+    <string name="facebook_app_id">341442453725841</string> <string name="fb_login_protocol_scheme">fb341442453725841</string>
+
+
 </resources>

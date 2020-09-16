@@ -97,4 +97,7 @@ dependencies {
 
     //facebook oauth
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    //google oauth
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
 }

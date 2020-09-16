@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tublessin_montir.R
-import com.example.tublessin_montir.domain.montir.MontirViewModel
 import com.example.tublessin_montir.domain.transaction.TransactionViewModel
 import com.example.tublessin_montir.recyleview.TransactionHistoryAdapter
 import com.pixplicity.easyprefs.library.Prefs
@@ -39,6 +39,9 @@ class HistoryTransactionFragment : Fragment() {
         transactionViewModel.transactionList().observe(viewLifecycleOwner, Observer{
             if(!it.Results.results.isNullOrEmpty()) {
                 transaction_history_recycle_view.adapter = TransactionHistoryAdapter(it.Results.results)
+                layoutNoHistory.isVisible = false
+            } else {
+                layoutNoHistory.isVisible = true
             }
         })
     }
