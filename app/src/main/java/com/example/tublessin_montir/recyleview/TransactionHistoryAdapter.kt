@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.domain.transaction.Transaction
@@ -18,14 +19,17 @@ class TransactionHistoryAdapter(private val transactionList: List<Transaction>):
         }
 
         override fun onBindViewHolder(holder: TransactionHistoryViewHolder, position: Int) {
-            holder.transactionId.text = "Transaction Id : ${transactionList[position].id}"
+            holder.transactionId.text = "Transaction ID : ${transactionList[position].id}"
             holder.customerName.text = "Customer : ${transactionList[position].user_firstname}"
             if (transactionList[position].status == "Canceled") {
                 holder.status.setTextColor(Color.RED)
+                holder.header.setCardBackgroundColor(Color.RED)
             } else if (transactionList[position].status == "Success") {
-                holder.status.setTextColor(Color.GREEN)
+                holder.status.setTextColor(Color.parseColor("#43C639"))
+                holder.header.setCardBackgroundColor(Color.parseColor("#43C639"))
             } else {
-                holder.status.setTextColor(Color.YELLOW)
+                holder.status.setTextColor(Color.BLUE)
+                holder.header.setCardBackgroundColor(Color.BLUE)
             }
             holder.status.text = transactionList[position].status
             holder.date.text = transactionList[position].date_created
@@ -41,4 +45,5 @@ class TransactionHistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val customerName = view.findViewById<TextView>(R.id.customerName)
     val status = view.findViewById<TextView>(R.id.statusTransaction)
     val date = view.findViewById<TextView>(R.id.dateTransaction)
+    var header = view.findViewById<CardView>(R.id.header_color_accent_trans_recycle_view)
 }
