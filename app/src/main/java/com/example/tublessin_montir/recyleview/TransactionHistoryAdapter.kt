@@ -1,5 +1,6 @@
 package com.example.tublessin_montir.recyleview
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,13 @@ class TransactionHistoryAdapter(private val transactionList: List<Transaction>):
         override fun onBindViewHolder(holder: TransactionHistoryViewHolder, position: Int) {
             holder.transactionId.text = "Transaction Id : ${transactionList[position].id}"
             holder.customerName.text = "Customer : ${transactionList[position].user_firstname}"
+            if (transactionList[position].status == "Canceled") {
+                holder.status.setTextColor(Color.RED)
+            } else if (transactionList[position].status == "Success") {
+                holder.status.setTextColor(Color.GREEN)
+            } else {
+                holder.status.setTextColor(Color.YELLOW)
+            }
             holder.status.text = transactionList[position].status
             holder.date.text = transactionList[position].date_created
         }

@@ -45,8 +45,9 @@
         </item>
     </style>
 
-<!--    facebook-->
-    <string name="facebook_app_id">341442453725841</string> <string name="fb_login_protocol_scheme">fb341442453725841</string>
+    <!--    facebook-->
+    <string name="facebook_app_id">341442453725841</string>
+    <string name="fb_login_protocol_scheme">fb341442453725841</string>
 
 
 </resources>

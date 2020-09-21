@@ -44,6 +44,7 @@ class NotifyOrderFragment : Fragment(), View.OnClickListener {
         onClickOrder.setOnClickListener(this)
         onCancelOrder.setOnClickListener(this)
         openMapClicked.setOnClickListener(this)
+        chat.setOnClickListener(this)
         navController= Navigation.findNavController(view)
 
         transactionId = Prefs.getString("transactionId", "0")
@@ -104,6 +105,9 @@ class NotifyOrderFragment : Fragment(), View.OnClickListener {
                 val uri: Uri = Uri.parse("https://www.google.com/maps/dir/${userLat},${userLong}/'${montirLat},${montirLong}'") // missing 'http://' will cause crashed
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 startActivity(intent)
+            }
+            chat ->{
+                navController.navigate(R.id.action_notifyOrderFragment_to_chatFragment)
             }
         }
     }

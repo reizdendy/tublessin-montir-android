@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_maps.*
+import kotlinx.android.synthetic.main.fragment_montir_profile.*
 
 class MapsFragment : Fragment(), View.OnClickListener {
 

@@ -9,10 +9,14 @@ import androidx.lifecycle.Observer
 import com.example.tublessin_montir.R
 import com.example.tublessin_montir.domain.montir.*
 import com.example.tublessin_montir.util.TextValidator
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.activity_register.*
 
 
 class RegisterActivity : AppCompatActivity() {
+    // Untuk keperluan Oauth Google
+    private val RC_SIGN_IN = 12345
+    lateinit var mGoogleSignInClient: GoogleSignInClient
 
     private val montirViewModel = MontirViewModel()
 

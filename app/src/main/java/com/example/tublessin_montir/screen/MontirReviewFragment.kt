@@ -42,7 +42,7 @@ class MontirReviewFragment : Fragment() {
         montirViewModel.requestGetMontirDetail(montirId)
         montirViewModel.getMontirAccountInfo().observe(viewLifecycleOwner, Observer {
             if (!it.result.profile.rating_list.isNullOrEmpty()){
-                montir_review_list_recycle_view.adapter = ReviewRecyleAdapter(it.result.profile.rating_list)
+                montir_review_list_recycle_view.adapter = ReviewRecyleAdapter(it.result.profile.rating_list.reversed())
                 layoutNoReview.isVisible = false
             } else {
                 layoutNoReview.isVisible = true
