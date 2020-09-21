@@ -3,6 +3,7 @@ package com.example.tublessin_montir.recyleview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tublessin_montir.R
@@ -17,9 +18,10 @@ class ReviewRecyleAdapter(private val reviewList: List<MontirRating>) :
     }
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
-       holder.review.text = reviewList[position].review
-       holder.rating.text = reviewList[position].rating.toString()
-       holder.date.text = reviewList[position].date_created
+        holder.review.text = reviewList[position].review
+//       holder.rating.text = reviewList[position].rating.toString()
+        holder.rating.rating = reviewList[position].rating.toInt().toFloat()
+        holder.date.text = reviewList[position].date_created
     }
 
     override fun getItemCount(): Int {
@@ -29,6 +31,8 @@ class ReviewRecyleAdapter(private val reviewList: List<MontirRating>) :
 
 class ReviewViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val review = view.findViewById<TextView>(R.id.content_review)
-    val rating = view.findViewById<TextView>(R.id.rating_review)
+    //    val rating = view.findViewById<TextView>(R.id.rating_review)
     val date = view.findViewById<TextView>(R.id.date_review)
+    val rating = view.findViewById<RatingBar>(R.id.rating_bar_indikator)
+
 }
