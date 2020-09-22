@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF">
@@ -11,9 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="5dp"
         android:background="#E4E4E4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,18 +25,19 @@
             android:id="@+id/dateTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/sample_transaction_date"
             android:textColor="#0E0E0E"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transactionId" />
 
         <TextView
             android:id="@+id/transactionId"
             android:layout_width="265dp"
             android:layout_height="44dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="5dp"
             android:text="Transaction Id : "
             android:textColor="#0C0C0C"
@@ -57,21 +59,22 @@
 
         <TextView
             android:id="@+id/customerName"
-            android:layout_width="265dp"
-            android:layout_height="44dp"
+            android:layout_width="250dp"
+            android:layout_height="42dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
             android:text="Customer Name : "
             android:textColor="#0C0C0C"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/dateTransaction"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transactionId" />
 
         <TextView
             android:id="@+id/statusTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="8dp"
             android:text="status"
             android:textColor="@android:color/holo_green_light"
             android:textSize="22sp"
