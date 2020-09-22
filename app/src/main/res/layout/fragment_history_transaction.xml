@@ -22,10 +22,10 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="28dp"
         android:text="Transaction History"
-        android:textColor="#1C1C1C"
+        android:textColor="#DD9F00"
         android:textSize="33sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
